@@ -64,8 +64,14 @@ async def read_item(skip: int = 0, limit: int = 10):
 
 
 # Opcional Parameters
-@app.get("/items/{item_id}")
-def get_item_id(item_id: str, q: Optional[str] = None):
+@app.get("/items/{it_id}")
+async def read_item2(it_id: str, q: Optional[str] = None, short: bool = False):
+    item = {"item_id": it_id}
     if q:
-        return {"item_id": item_id, "q": f"SI:{q}"}
-    return {"item_id": item_id, "q": "NO"}
+        item.update({"q": q})
+    if not short:
+        item.update(
+            {"description": "This is an item that has a long description"}
+        )
+    return item
+
