@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -62,3 +63,9 @@ async def read_item(skip: int = 0, limit: int = 10):
     return fake_items_db[skip:skip + limit]
 
 
+# Opcional Parameters
+@app.get("/items/{item_id}")
+def get_item_id(item_id: str, q: Optional[str] = None):
+    if q:
+        return {"item_id": item_id, "q": f"SI:{q}"}
+    return {"item_id": item_id, "q": "NO"}
