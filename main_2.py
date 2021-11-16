@@ -129,3 +129,24 @@ async def create_item(item: Item):
 @app.put("/items3/{item_id}")
 async def create_item2(item_id: int, item: Item, optional: Optional[str] = None):
     return {"item_id": item_id, "opt": optional, **item.dict()}
+
+
+# Validations & constraints
+from fastapi import Query
+
+
+@app.get("/items4/")
+async def read_items4(q: Optional[str] = Query(None,min_length=3, max_length=50)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
+
+# required parameters with Query
+@app.get("/items5/")
+async def read_items5(q: str = Query(..., min_length=3)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
