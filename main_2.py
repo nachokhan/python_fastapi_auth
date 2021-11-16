@@ -185,3 +185,13 @@ async def read_items8(
         results.update({"q": q})
     return results
 
+
+# Alias for parameters
+@app.get("/items9/")
+async def read_items9(q: Optional[str] = Query(None, alias="item-query")):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
+
