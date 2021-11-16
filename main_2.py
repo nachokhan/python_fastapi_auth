@@ -94,3 +94,9 @@ def read_user_item(user_id: int, item_id:int , q: Optional[str], short: bool = F
         )
     return item
 
+
+# required params
+@app.get("/items2/{item_id}")
+async def read_user_item2(item_id: str, needy: str):
+    item = {"item_id": item_id, "needy": needy}
+    return item
