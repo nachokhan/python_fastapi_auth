@@ -78,7 +78,7 @@ async def read_item2(it_id: str, q: Optional[str] = None, short: bool = False):
 
 # Multiple path & query params
 @app.get("/users/{user_id}/items/{item_id}")
-def read_user_item(user_id: int, item_id:int , q: Optional[str], short: bool = False):
+def read_user_item(user_id: int, item_id: int, q: Optional[str], short: bool = False):
     item = {
         "user": user_id,
         "item": item_id,
@@ -100,3 +100,28 @@ def read_user_item(user_id: int, item_id:int , q: Optional[str], short: bool = F
 async def read_user_item2(item_id: str, needy: str):
     item = {"item_id": item_id, "needy": needy}
     return item
+
+
+# request body
+# json info will be sent in the body of the request
+from pydantic import BaseModel
+
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+
+# POST no GET
+@app.post("/items3/")
+async def create_item(item: Item):
+
+    new_item = {
+        "The Name": item.name,
+        "Anotherthing": item.price
+    }
+
+    return new_item
+
