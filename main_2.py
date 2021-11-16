@@ -160,3 +160,28 @@ from typing import List
 async def read_items6(q: Optional[List[str]] = Query(None)):
     query_items = {"q": q}
     return query_items
+
+
+@app.get("/items7/")
+async def read_items7(q: List[str] = Query(["foo", "bar"])):
+    query_items = {"q": q}
+    return query_items
+
+
+# Metadata for params
+# This will only affect the documentation OpenAPI
+
+@app.get("/items8/")
+async def read_items8(
+    q: Optional[str] = Query(
+        None,
+        title="Query string",
+        description="Query string for the items to search in the database that have a good match",
+        min_length=3,
+    )
+):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
