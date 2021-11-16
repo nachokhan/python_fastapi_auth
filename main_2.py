@@ -125,3 +125,7 @@ async def create_item(item: Item):
 
     return new_item
 
+
+@app.put("/items3/{item_id}")
+async def create_item2(item_id: int, item: Item, optional: Optional[str] = None):
+    return {"item_id": item_id, "opt": optional, **item.dict()}
