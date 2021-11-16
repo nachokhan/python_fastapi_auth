@@ -75,3 +75,22 @@ async def read_item2(it_id: str, q: Optional[str] = None, short: bool = False):
         )
     return item
 
+
+# Multiple path & query params
+@app.get("/users/{user_id}/items/{item_id}")
+def read_user_item(user_id: int, item_id:int , q: Optional[str], short: bool = False):
+    item = {
+        "user": user_id,
+        "item": item_id,
+        "Q": "NO"
+    }
+    if q:
+        item.update(
+            {"Q": "SI: " + q}
+        )
+    if not short:
+        item.update(
+            {"description": "This is an item that has a long description"}
+        )
+    return item
+
