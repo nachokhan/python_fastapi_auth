@@ -150,3 +150,13 @@ async def read_items5(q: str = Query(..., min_length=3)):
     if q:
         results.update({"q": q})
     return results
+
+
+# Multiple values query list
+from typing import List
+
+
+@app.get("/items6/")
+async def read_items6(q: Optional[List[str]] = Query(None)):
+    query_items = {"q": q}
+    return query_items
